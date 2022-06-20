@@ -42,6 +42,7 @@ public class P01_Login_Page extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    String temp="";
     /**
      * @param args the command line arguments
      */
