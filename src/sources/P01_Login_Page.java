@@ -27,24 +27,30 @@ public class P01_Login_Page extends javax.swing.JFrame {
         jPasswordField2 = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         Change_Mode = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("FRAME1");
+        setTitle("User Login");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("FRAME 01"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 170, 400, 40));
+        getContentPane().add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, 400, 40));
 
-        jTextField2.setText("jTextField2");
-
-        jPasswordField2.setText("jPasswordField2");
-
-        jButton2.setText("jButton2");
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton2.setText("SIGN IN");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 300, 400, 40));
 
         Change_Mode.setText("1");
         Change_Mode.addActionListener(new java.awt.event.ActionListener() {
@@ -52,44 +58,20 @@ public class P01_Login_Page extends javax.swing.JFrame {
                 Change_ModeActionPerformed(evt);
             }
         });
+        getContentPane().add(Change_Mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(1214, 21, 40, 40));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(753, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(127, 127, 127))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Change_Mode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(Change_Mode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(417, Short.MAX_VALUE))
-        );
+        jLabel1.setText("Username");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 400, -1));
+
+        jLabel2.setText("Password");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 400, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     boolean theme = true;
     String user, password;
-    Theme T=new Theme();
+    Theme T = new Theme();
     Database_Connection DB = new Database_Connection();
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -101,8 +83,15 @@ public class P01_Login_Page extends javax.swing.JFrame {
                 ResultSet rs = DB.DB_Select(query);
                 if (rs.next()) {
                     if (rs.getString("Password").equals(password) && rs.getInt("Status") == 1) {
-                        //System.out.print(rs.getInt("Employee_ID")+"\n"+rs.getString("User_ID")+"\n"+rs.getString("Password")+"\n"+rs.getString("Status"));
-                        //Go to next page
+                        String ID = rs.getString("Employee_ID");
+                        String temp = ID.substring(0, 3);
+                        if (temp.equals("EMP")) {
+                            new P02_Employee_Home(ID).setVisible(true);
+                            this.dispose();
+                        } else if (temp.equals("MAN")) {
+                            new P03_Manager_Home(ID).setVisible(true);
+                            this.dispose();
+                        }
                     }
                 }
             }
@@ -112,10 +101,10 @@ public class P01_Login_Page extends javax.swing.JFrame {
 
     private void Change_ModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Change_ModeActionPerformed
         if (theme) {
-            T.Change_Theme(this,theme);
+            T.Change_Theme(this, theme);
             theme = false;
         } else {
-            T.Change_Theme(this,theme);
+            T.Change_Theme(this, theme);
             theme = true;
         }
     }//GEN-LAST:event_Change_ModeActionPerformed
@@ -131,9 +120,9 @@ public class P01_Login_Page extends javax.swing.JFrame {
         temp = true;
         return temp;
     }
-    
+
     public static void main(String args[]) {
-        
+
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
             UIManager.put("TextComponent.arc", 15);
@@ -151,6 +140,8 @@ public class P01_Login_Page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Change_Mode;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
