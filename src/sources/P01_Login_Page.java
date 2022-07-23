@@ -89,7 +89,7 @@ public class P01_Login_Page extends javax.swing.JFrame {
                             new P02_Employee_Home(ID).setVisible(true);
                             this.dispose();
                         } else if (temp.equals("MAN")) {
-                            new P03_Manager_Home(ID).setVisible(true);
+                            new P23_Manager_Home(ID).setVisible(true);
                             this.dispose();
                         }
                     }

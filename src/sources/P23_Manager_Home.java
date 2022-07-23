@@ -10,14 +10,14 @@ import com.formdev.flatlaf.*;
 import support.Database_Connection;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class P03_Manager_Home extends javax.swing.JFrame {
+public class P23_Manager_Home extends javax.swing.JFrame {
 
-    public P03_Manager_Home() {
+    public P23_Manager_Home() {
         initComponents();
         Change_Mode.putClientProperty("Button.arc", 999);
     }
     
-    public P03_Manager_Home(String ID) {
+    public P23_Manager_Home(String ID) {
         initComponents();
         Change_Mode.putClientProperty("Button.arc", 999);
         System.out.println(ID);
@@ -33,7 +33,6 @@ public class P03_Manager_Home extends javax.swing.JFrame {
         setTitle("Manager Home");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setName("FRAME 01"); // NOI18N
 
         Change_Mode.setText("1");
